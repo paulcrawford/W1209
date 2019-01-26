@@ -18,4 +18,4 @@ deploy:
   on:
     tags: true
     branch: master
-    repo: TG9541/W1209
+    repo: paulcrawford/W1209
