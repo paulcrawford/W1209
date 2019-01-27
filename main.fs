@@ -28,13 +28,13 @@ TARGET
 
 #include measure.fs
 #include menu.fs
-#include logger.fs
+\#include logger.fs
 #include control.fs
 
   : task ( -- )
     \ the application runs as a background task
     measure  (       -- theta )    \ measure temperature
-    logger   ( theta -- theta )    \ data logging
+    \logger   ( theta -- theta )    \ data logging
     control  ( theta -- theta )    \ temperature control
     menu     ( theta -- theta )    \ menu and display code
   ;
