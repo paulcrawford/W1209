@@ -43,6 +43,10 @@ TARGET
     \ start-up word
     init                   \ perform chained init
     [ ' task ] LITERAL BG !
+    BEGIN
+      theta @ .0 CR
+      ?KEY IF 13 = ELSE 0 THEN
+    UNTIL
   ;
 
   \ set boot vector to start-up word
