@@ -10,37 +10,47 @@
 
 TARGET
 
-  VARIABLE c.heat
+  \ VARIABLE c.heat
+  VARIABLE c.cool
   VARIABLE c.delay
 
   : C.off ( -- n )
     \ upper threshold [0.1ºC]
-    EE.SET @
+    C.on EE.HYS @ +
+    \for cooling rather than heating need to reverse C.off and C.on
+    \ EE.SET @
   ;
 
   : C.on ( -- n )
     \ lower threshold [0.1ºC]
-    C.off EE.HYS @ -
+    \ C.off EE.HYS @ -
+    EE.SET @ 
   ;
 
   : controller ( theta -- flag )
     \ simple temperature control with hystesis & delay
-    c.heat @ IF
-      ( theta ) C.off SWAP < IF
-        OFF c.heat !
+    \ c.heat @ IF
+    c.cool @ IF
+      \ ( theta ) C.off SWAP < IF
+      ( theta ) C.on SWAP > IF
+        \ OFF c.heat !
+        OFF c.cool !
         EE.DEL @ ( [10s] )
         20 ( ticks [5ms] ) * c.delay !
       THEN
     ELSE
-      ( theta ) C.on < IF
+      \ ( theta ) C.on < IF
+      ( theta ) C.off > IF
         c.delay @ IF
           -1 c.delay +!
         ELSE
-          ON c.heat !
+         \ ON c.heat !
+          ON c.cool !
         THEN
       THEN
     THEN
-    c.heat @           \ return flag
+    \ c.heat @           \ return flag
+    c.cool @           \ return flag
   ;
 
   : control ( theta -- theta )
@@ -53,7 +63,8 @@ TARGET
   ;
 
   : init ( -- ) init   \ chained init
-    OFF c.heat !
+    \ OFF c.heat !
+    OFF c.cool !
     0 c.delay !
   ;
 
