@@ -23,7 +23,7 @@ TARGET
   : C.off ( -- n )
     \ upper threshold [0.1ºC]
     C.on EE.HYS @ +
-    \for cooling rather than heating need to reverse C.off and C.on
+    \ for cooling rather than heating need to reverse C.off and C.on
     \ EE.SET @
   ;
 
