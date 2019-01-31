@@ -34,7 +34,7 @@ TARGET
   : task ( -- )
     \ the application runs as a background task
     measure  (       -- theta )    \ measure temperature
-    \logger   ( theta -- theta )    \ data logging
+    \ logger   ( theta -- theta )    \ data logging
     control  ( theta -- theta )    \ temperature control
     menu     ( theta -- theta )    \ menu and display code
   ;
