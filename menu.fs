@@ -64,7 +64,7 @@ TARGET
      20  -20  EE.COR    0  >MENU COR.  \ [0.1C]
      40    1  EE.HYS    10  >MENU HYS.  \ [0.1C]
     \ 800  100  EE.SET  375  >MENU SET.  \ [0.1C]
-    100  -10   EE.SET  -65  >MENU SET.  \ [0.1C]
+    100  -100   EE.SET  -65  >MENU SET.  \ [0.1C]
   LAST @ CONSTANT M.START
 
   \ ( compile time stack: M.end )
