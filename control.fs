@@ -32,7 +32,7 @@ TARGET
     \ c.heat @ IF
     c.cool @ IF
       \ ( theta ) C.off SWAP < IF
-      ( theta ) C.on SWAP > IF
+      ( theta ) C.on < IF
         \ OFF c.heat !
         OFF c.cool !
         EE.DEL @ ( [10s] )
@@ -40,7 +40,7 @@ TARGET
       THEN
     ELSE
       \ ( theta ) C.on < IF
-      ( theta ) C.off > IF
+      ( theta ) C.off SWAP < IF
         c.delay @ IF
           -1 c.delay +!
         ELSE
