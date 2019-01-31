@@ -62,9 +62,11 @@ TARGET
     \ 100    0  EE.LOG   10  >MENU LOG.  \ [0.1h], 0: off
     600    0  EE.DEL    0  >MENU DEL.  \ [0.1s]
      20  -20  EE.COR    0  >MENU COR.  \ [0.1C]
-     40    1  EE.HYS    10  >MENU HYS.  \ [0.1C]
+    \ 40    1  EE.HYS    10  >MENU HYS.  \ [0.1C]
+     40    1  EE.HYS    40  >MENU HYS.  \ [0.1C]
     \ 800  100  EE.SET  375  >MENU SET.  \ [0.1C]
-    100  -100   EE.SET  -65  >MENU SET.  \ [0.1C]
+    100  30   EE.SET  65  >MENU SET.  \ [0.1C]
+    400  200   EE.SET  250  >MENU SET.  \ [0.1C]
   LAST @ CONSTANT M.START
 
   \ ( compile time stack: M.end )
