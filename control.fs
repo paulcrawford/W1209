@@ -22,7 +22,7 @@ TARGET
 
   : C.off ( -- n )
     \ upper threshold [0.1ºC]
-    C.on EE.HYS @ +
+    C.on EE.HYS @ -
     \ for cooling rather than heating need to reverse C.off and C.on
     \ EE.SET @
   ;
@@ -32,7 +32,7 @@ TARGET
     \ c.heat @ IF
     c.cool @ IF
       \ ( theta ) C.off SWAP < IF
-      ( theta ) C.on < IF
+      ( theta ) C.off < IF
         \ OFF c.heat !
         OFF c.cool !
         EE.DEL @ ( [10s] )
@@ -40,7 +40,7 @@ TARGET
       THEN
     ELSE
       \ ( theta ) C.on < IF
-      ( theta ) C.off SWAP < IF
+      ( theta ) C.on SWAP < IF
         c.delay @ IF
           -1 c.delay +!
         ELSE
