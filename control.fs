@@ -64,8 +64,9 @@ TARGET
 
   : init ( -- ) init   \ chained init
     \ OFF c.heat !
-    OFF c.cool !
-    0 c.delay !
+    \ OFF c.cool !
+    ON c.cool !
+   0 c.delay !
   ;
 
 ENDTEMP
