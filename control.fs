@@ -14,17 +14,17 @@ TARGET
   VARIABLE c.cool
   VARIABLE c.delay
 
+  : C.on ( -- n )
+    \ lower threshold [0.1ºC]
+    \ C.off EE.HYS @ -
+    EE.SET @ 
+  ;
+
   : C.off ( -- n )
     \ upper threshold [0.1ºC]
     C.on EE.HYS @ +
     \for cooling rather than heating need to reverse C.off and C.on
     \ EE.SET @
-  ;
-
-  : C.on ( -- n )
-    \ lower threshold [0.1ºC]
-    \ C.off EE.HYS @ -
-    EE.SET @ 
   ;
 
   : controller ( theta -- flag )
