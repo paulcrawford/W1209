@@ -28,7 +28,7 @@ TARGET
 
 #include measure.fs
 #include menu.fs
-\#include logger.fs
+\ #include logger.fs
 #include control.fs
 
   : task ( -- )
