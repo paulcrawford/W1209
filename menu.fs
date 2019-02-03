@@ -3,11 +3,17 @@
 
 #include STARTTEMP
 
+#require ]B!
+\res MCU: STM8S103
+\res export PC_DDR
+  5  CONSTANT PNTX
+
   \ key constants (A, B, D)
   65 CONSTANT KEY.SET
   66 CONSTANT KEY.PLUS
   68 CONSTANT KEY.MINUS
   70 CONSTANT KEY.PRESET  \ key+ & key-
+
 
   : L' ( name -- )
     \ compile xt of next word as literal
@@ -22,6 +28,7 @@ TARGET
   VARIABLE m.ptr    \ current menu
   VARIABLE m.hold   \ key hold count
   VARIABLE m.disp   \ last display value
+  VARIABLE m.tx     \ delay menu action after TX
 
   : M..0 ( n -- n )
     \ lazy .0: print number only if value has changed
@@ -205,19 +212,32 @@ TARGET
     THEN
   ;
 
+  : m.TX! ( c -- )
+    [ 1 PC_DDR PNTX ]B!  2 m.tx !
+    TX!
+  ;
+
   : menu ( theta -- theta )
-    \ menu code with time-out handling
-    M.timer 0= IF
-      \ time-out sub menus
-      L' M0 m.level !
+    \ work around GPIO dual use effects
+    m.tx @ ?DUP IF
+      1- m.tx !
+    ELSE
+      [ 0 PC_DDR PNTX ]B!
+
+      \ menu code with time-out handling
+      M.timer 0= IF
+        \ time-out sub menus
+        L' M0 m.level !
+      THEN
+      m.level @ EXECUTE
     THEN
-    m.level @ EXECUTE
   ;
 
   : init ( -- ) init    \ chained init
     M.rh                \ reset hold
     M.START m.ptr !     \ point to the first menu item
     0 m.time !          \ time-out -> menu init
+    [ ' m.TX! ] LITERAL 'EMIT ! \ work-around W1209 key GPIO doubling as TxD
   ;
 
 ENDTEMP
