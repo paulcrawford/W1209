@@ -31,6 +31,12 @@ TARGET
 \ #include logger.fs
 #include control.fs
 
+#require CRC16
+
+  : crcw ( crc n -- crc )
+    SWAP OVER EXG $FF AND CRC16
+    SWAP $FF AND CRC16 ;
+
   : task ( -- )
     \ the application runs as a background task
     measure  (       -- theta )    \ measure temperature
@@ -42,14 +48,23 @@ TARGET
   : start   ( -- )
     \ start-up word
     init                   \ perform chained init
+    0  ( cc ) \ counter
     [ ' task ] LITERAL BG !
     BEGIN
-      theta @ .0 CR
+     \ theta @ .0 CR
+      TIM $1FF AND 0= IF
+        1+
+        ( cc ) -1  theta @ DUP  .0 crcw
+        HEX
+        ( cc crc ) OVER    DUP  .  crcw
+        ( cc crc ) . CR
+        DECIMAL
+      THEN
       ?KEY IF 13 = ELSE 0 THEN
     UNTIL
+    ( cc ) DROP  \ set boot vector to start-up word
   ;
 
-  \ set boot vector to start-up word
   ' start 'BOOT !
 
 RAM
