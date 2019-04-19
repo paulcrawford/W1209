@@ -52,8 +52,9 @@ TARGET
     [ ' task ] LITERAL BG !
     BEGIN
      \ theta @ .0 CR
-      TIM $1FF AND 0= IF
-        1+
+      \ TIM $1FF AND 0= IF
+      TIM $3FF AND 0= IF
+      1+
         ( cc ) -1  theta @ DUP  .0 crcw
         HEX
         ( cc crc ) OVER    DUP  .  crcw
